@@ -2,8 +2,6 @@ require 'promise'
 
 module Overwolf
 	class Window
-		include Native
-
 		def self.current
 			Promise.new.tap {|p|
 				%x{
@@ -33,6 +31,8 @@ module Overwolf
 				}
 			}
 		end
+
+		include Native
 
 		alias_native :id
 
