@@ -14,7 +14,7 @@ module Overwolf
 			Promise.new.tap {|p|
 				%x{
 					overwolf.games.getRunningGameInfo(function(result) {
-						#{p.resolve Game.coerce(`result`)};
+						#{p.resolve coerce(`result`)};
 					});
 				}
 			}
@@ -24,8 +24,8 @@ module Overwolf
 			case type
 			when :change
 				%x{
-					overwolf.games.onGameInfoUpdated.addListener(function(game) {
-						#{block.call(coerce(`game`))};
+					overwolf.games.onGameInfoUpdated.addListener(function(update) {
+						#{block.call(Update.new(`update`))};
 					});
 				}
 
@@ -50,5 +50,18 @@ module Overwolf
 		alias_native :capture?, :allowsVideoCapture
 
 		alias_native :renderers
+
+		class Update
+			include Native
+
+			alias_native :focus?, :focusChanged
+			alias_native :game?, :gameChanged
+			alias_native :resolution?, :resolutionChanged
+			alias_native :running?, :runningChanged
+
+			def game
+				Game.new(`#@native.gameInfo`)
+			end
+		end
 	end
 end
