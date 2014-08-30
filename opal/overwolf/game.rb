@@ -1,5 +1,15 @@
 module Overwolf
 	class Game
+		def self.coerce(value)
+			return if `value == null`
+
+			if Array === value
+				value.map { |v| new(v) }
+			else
+				new(v)
+			end
+		end
+
 		def self.current
 			Promise.new.tap {|p|
 				%x{
@@ -15,26 +25,16 @@ module Overwolf
 			when :change
 				%x{
 					overwolf.games.onGameInfoUpdated.addListener(function(game) {
-						#{block.call(new(game))};
+						#{block.call(coerce(`game`))};
 					});
 				}
 
 			when :launch
 				%x{
 					overwolf.games.onGameLaunched.addListener(function(game) {
-						#{block.call(new(game))};
+						#{block.call(coerce(`game`))};
 					});
 				}
-			end
-		end
-
-		def self.coerce(value)
-			return if `value == null`
-
-			if Array === value
-				value.map { |v| new(v) }
-			else
-				new(v)
 			end
 		end
 
