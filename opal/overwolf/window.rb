@@ -44,6 +44,10 @@ module Overwolf
 
 		alias_native :visible?, :isVisible
 
+		def closed?
+			`#@native.isVisible == false && #@native.width == 1 && #@native.height == 1`
+		end
+
 		def moving
 			`overwolf.windows.dragMove(#@native.id)`
 
