@@ -2,6 +2,7 @@ require 'overwolf/window'
 require 'overwolf/settings'
 require 'overwolf/game'
 require 'overwolf/media'
+require 'overwolf/clipboard'
 
 module Overwolf
 	def self.available?
