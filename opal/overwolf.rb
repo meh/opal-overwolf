@@ -11,4 +11,8 @@ module Overwolf
 	def self.launch(id)
 		`overwolf.extensions.launch(id)`
 	end
+
+	def self.version
+		`overwolf.version`
+	end
 end
