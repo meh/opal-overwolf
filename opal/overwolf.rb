@@ -3,6 +3,7 @@ require 'overwolf/settings'
 require 'overwolf/game'
 require 'overwolf/media'
 require 'overwolf/clipboard'
+require 'overwolf/keyboard'
 
 module Overwolf
 	def self.available?
